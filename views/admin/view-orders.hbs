@@ -1,0 +1,104 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+<style>
+  <style>
+    body
+{
+    counter-reset: Serial;           /* Set the Serial counter to 0 */
+}
+
+table
+{
+    border-collapse: separate;
+}
+
+tr td:first-child:before
+{
+  counter-increment: Serial;      /* Increment the Serial counter */
+  content:  counter(Serial); /* Display the counter */
+}
+</style>
+<section>
+  <div class="container">
+    <div class="row mt-5">
+    
+    </div>
+    <table class="table mt-5" id="myTablee" style="margin-left: 130px;">
+      <thead>
+        <tr>
+<th scope="col">No</th>
+          
+          <th scope="col">Mobile</th>
+          <th scope="col">Address</th>
+          <th scope="col">Pincode</th>
+          <th scope="col">Payment mode</th>
+          <th scope="col">Price </th>
+          <th scope="col">Date</th>
+         
+          <th scope="col">Status</th>
+        
+        </tr>
+      </thead>
+      <tbody>
+        <tr></tr>
+        {{#each response}}
+        <tr>
+<th scope="col">{{@index}}</th>
+
+          
+          <td>{{this.deliveryDetails.mobile}}</td>
+          <td>{{this.deliveryDetails.address}}</td>
+          <td>{{this.deliveryDetails.pincode}}</td>
+          <td>{{this.paymentMethod}}</td>
+          <td>{{this.total}}</td> --}}
+          <td>{{this.date}}</td>
+         <td>
+                                <div class="col-sm-3">
+                                    <div class="show-entries">
+                                      <label for="" id="{{this._id}}1">{{this.status}}</label>
+                                        <select class="form-control" id="{{this._id}}" onload="look('{{this._id}}')"
+                                            onchange="listenit('{{this._id}}')" aria>
+                                            <option value="Pending" selected hidden>{{this.status}}</option>    
+                                            <option value="Pending">Pending</option>
+                                            <option value="confirmed">confirmed</option>
+                                            <option value="out for delivery">out for delivery</option>
+                                            <option value="delivered">delivered</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                           
+          
+          
+        </tr>
+        {{/each}}
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<script>
+  $(document).ready(function () {
+    $('#table_id').DataTable();
+  });
+</script>
+<script>
+    function listenit(userId) {
+        var value = document.getElementById(userId).value
+        console.log(value)
+        $.ajax({
+            url: '/admin/change-product-status  ',
+            data: {
+                user: userId,
+                status: value
+            },
+            method: 'post',
+            success: (response) => {
+            }
+        })
+    }
+</script>
+
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>

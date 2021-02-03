@@ -1,0 +1,34 @@
+<section>
+    <div class="container mt-5">
+        <div class="row">
+            {{#each products}}
+            <div class="col-md-3 p-3">
+                <div class="card" style="width: 15rem; height:24rem;">
+                    <img  class="card-img-top" 
+                    src="/product-images/{{this.product._id}}.jpg" 
+                    alt="Card Image Cap"
+                    style="height: 12rem;">
+                    <div class="card-body">
+                        <h5 class="cardtitle">{{this.product.Name}}</h5>
+                        <p class="card-text">Rs.{{this.product.Price}}</p>
+                        <p class="card-text">Quantity: {{this.quantity}}</p>
+                        <p class="card-text">{{this.Description}}</p>
+                    </div>
+                </div>
+
+            </div>
+            {{/each}}
+        </div>
+
+    </div>
+</section>
+<section>
+    <div class="row">
+        <div class="container">
+            <div class="col-md-12 text-center">
+                <h3 class="text-center">Shop More>>>>Feel the Vibe Of Farishta </h3>
+                <a href="/" class="btn btn-success">GO TO HOME PAGE</a>
+            </div>
+        </div>
+    </div>
+</section>

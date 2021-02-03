@@ -1,0 +1,64 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+
+<section>
+  <div class="container">
+    <div class="row mt-5">
+     
+      <a href="/admin/add-category" class="btn btn-success ml-auto">Add Category</a>
+    </div>
+    <table class="table mt-5 category" id="myTablee" style="142px">
+      <thead>
+        <tr>
+<th scope="col">No</th>
+          <th scope="col">Category Name</th>
+          
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each response}}
+        <tr>
+<td>{{@index}}</td>
+
+          <td>{{this.Name}}</td>
+         
+        
+          <td>
+            <a href="/admin/edit-category/{{this._id}}" class="btn btn-primary">Edit</a>
+            <a href="/admin/delete-category/{{this._id}}/{{this.Name}}" class="btn btn-danger"
+              onclick=" return confirm('Are you sure want to delete {{this.Name}} ?')">Delete</a></td>
+        </tr>
+        {{/each}}
+
+      </tbody>
+    </table>
+    {{!-- <table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Data 1</td>
+            <td>Row 2 Data 2</td>
+        </tr>
+    </tbody>
+</table> --}}
+  </div>
+</section>
+
+<script>
+  $(document).ready(function () {
+    $('#myTablee').DataTable();
+  });
+</script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>

@@ -1,0 +1,72 @@
+<section>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6" style="margin-left:178px;">
+                <h2 class="text-center">Add Product</h2>
+                <form action="/admin/add-product" method="POST" enctype="multipart/form-data">
+                     <div>
+                    <label for="">Name</label>
+                    <input type="text" name="Name" class="form-control"></div>
+
+
+                    <div class="form-group">
+                        <div class="show-entries">
+                            <label for="">Category </label>
+                            <select class="form-control" name="categories" id="{{this._id}}"
+                                onchange="listenit('{{this._id}}')" name="category">
+                                <option value="select" disabled selected>Select</option>
+                                {{#each categories}}
+                                <option value="{{this.Name}}">{{this.Name}}
+                                <option>
+                                    {{/each}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                    <label for="">Price</label>
+                    <input type="text" name="Price" class="form-control"></div>
+                    <div>
+                    <label for="">Description</label>
+                    <input type="text" name="Description" class="form-control"></div>
+
+                    <div id="result" class="form-group">
+                        <label for="">Image</label>
+                        <img id="imgView" height="150px" width="150px">
+                        <input type="file" name="Image" class="form-control" id="prodImg" accept="image/*" required>
+                        <textarea name="croppedImg" id="croppedImg" cols="30" rows="10" hidden></textarea>
+                        <button type="submit" class="btn btn-success mt-4">Submit</button>
+                    </div>
+
+                    <div class="modal fade" id="productCropModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Crop Image</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <canvas id="canvas">
+                                        Your browser does not support the HTML5 canvas element.
+                                    </canvas>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" id="cropProductImg" class="btn btn-primary">Save
+                                        changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/javascripts/crop.js"></script>

@@ -1,0 +1,84 @@
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
+<style>
+  <style>
+    body
+{
+    counter-reset: Serial;           /* Set the Serial counter to 0 */
+}
+
+table
+{
+    border-collapse: separate;
+}
+
+tr td:first-child:before
+{
+  counter-increment: Serial;      /* Increment the Serial counter */
+  content:  counter(Serial); /* Display the counter */
+}
+</style>
+<section>
+  <div class="container">
+    <div class="row mt-5">
+      <a href="/admin/add-product" class="btn btn-success ml-auto">Add Product</a>
+    </div>
+    <table class="table mt-5" id="myTablee" style="margin-left: 130px;">
+      <thead>
+        <tr>
+<th scope="col">No</th>
+          <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Price</th>
+          <th scope="col">Description</th>
+          <th scope="col">Image</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each products}}
+        <tr>
+<td></td>
+          <td>{{this.Name}}</td>
+          <td>{{this.categories}}</td>
+          <td>{{this.Price}}</td>
+          <td>{{this.Description}}</td>
+          <td><img style="width: 50px;height:50px" src="/product-images/{{this._id}}.jpg" alt=""></td>
+          <td>
+            <a href="/admin/edit-product/{{this._id}}" class="btn btn-primary">Edit</a>
+            <a href="/admin/delete-product?id={{this._id}}" class="btn btn-danger"
+              onclick=" return confirm('Are you sure want to delete {{this.Name}} ?')">Delete</a></td>
+        </tr>
+        {{/each}}
+
+      </tbody>
+    </table>
+    {{!-- <table id="table_id" class="display">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Row 1 Data 1</td>
+            <td>Row 1 Data 2</td>
+        </tr>
+        <tr>
+            <td>Row 2 Data 1</td>
+            <td>Row 2 Data 2</td>
+        </tr>
+    </tbody>
+</table> --}}
+  </div>
+</section>
+
+<script>
+  $(document).ready(function () {
+    $('#table_id').DataTable();
+  });
+</script>
+  <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>

@@ -1,0 +1,163 @@
+<h1 style="text-align:center">CART</h1>
+<section>
+    <div class="container">
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">Item</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each products}}
+                <tr>
+                   
+                    <td><img style="width:70px ;height:70px" src="/product-images/{{this.product._id}}.jpg" alt=""></td>
+                    <td>{{this.product.Name}}</td>
+                    
+                    <td>{{this.product.Price}}</td>
+                    <td>
+                        <button class="cart-item-count mr-3 " onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',-1)">-</button>
+                        <span id="{{this.product._id}}">{{this.quantity}}</span>
+                        
+                        <button class="cart-item-count ml-3" onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user}}',1)">+</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removeProduct('{{this._id}}','{{this.product._id}}')">Remove</button>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+
+        </table>
+        <hr>
+        <h3 class="float-right mr-5 mt-6" >Total Rs: <span id="total">{{totalValue}}</span></h3>
+        <a href="/place-order" class="float-right mt-4 mr-4 btn btn-success" style="clear: right; width:100%;">Place Order</a>
+    </div>
+</section>
+<script>
+ /*   function removeProduct(cartId,proId){
+        console.log(cartId,proId)
+        $.ajax({
+            url:'/remove-product',
+            data:{
+                cart:cartId,
+                product:proId
+            },
+            method:'post',
+            success:(response)=>{
+                if(response.removeProduct){
+                alert('Are you sure')
+                location.reload()
+            }
+            }
+        })
+    }
+    function changeQuantity(cartId,proId,userId,count){
+    let quantity=parseInt(document.getElementById(proId).innerHTML)
+    count = parseInt(count)
+    $.ajax({
+        url:'/change-product-quantity',
+        method:'post',
+        data:{
+            user:userId,
+            cart:cartId,
+            product:proId,
+            count:count,
+            quantity:quantity
+        },
+        
+        success:(response)=>{
+            console.log(response)
+          if(response.removeProduct){
+              alert("Product removed from cart")
+              location.reload()
+          }else{
+              document.getElementById(proId).innerHTML=quantity+count
+              document.getElementById('total').innerHTML=response.total
+
+          }
+        }
+    })
+}*/
+function addToCart(prodId) {
+  $.ajax({
+    url: "/addToCart/" + prodId,
+    method: "get",
+    success: (response) => {
+      if (response.status) {
+        let count = $("#cart-count").html();
+        count = parseInt(count) + 1;
+        $("#cart-count").html(count);
+      }else{
+        window.location.href='/login'
+      }
+    },
+  });
+}
+
+// change quantity
+function changeQuantity(cartId, prodId, userId, count) {
+  let qty = parseInt($("#qty-" + prodId).val());
+  count = parseInt(count);
+  if (qty <= 1 && count == -1) {
+    disableMinus(prodId);
+  } else {
+    $.ajax({
+      url: "/change-product-quantity",
+      method: "post",
+      data: {
+        user: userId,
+        cart: cartId,
+        product: prodId,
+        quantity: qty,
+        count: count,
+      },
+      success: (totalPrice) => {
+        console.log(totalPrice);
+        // $('.totalPrice').html(totalPrice);
+        document.getElementById("qty-" + prodId).value = qty + count;
+        let total_1 = document.querySelectorAll(".totalPrice");
+        total_1[0].innerHTML = totalPrice;
+        total_1[1].innerHTML = totalPrice;
+        disableMinus(prodId);
+      },
+    });
+  }
+}
+
+function disableMinus(prodId) {
+  let qty = parseInt($("#qty-" + prodId).val());
+  console.log(qty);
+  if (qty <= 1) {
+    $("#minus-btn-" + prodId).prop("disabled", true);
+  } else {
+    $("#minus-btn-" + prodId).prop("disabled", false);
+  }
+}
+
+// remove one cart prodect
+function removeProduct(cartId, prodId) {
+  if (confirm("Are you sure?")) {
+    $.ajax({
+      url: '/remove-product',
+      method: "post",
+      data: {
+        cart: cartId,
+        product: prodId,
+      },  
+      success: (response) => {
+        if (response) {
+          location.reload();
+        }
+      },
+    });
+  }
+}
+
+
+</script>

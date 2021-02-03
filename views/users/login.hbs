@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-md-6 m-auto">
+        <div class="container mt-5 pl-5">
+            <h2 class="text-center"> PLEASE LOGIN</h2>
+            <form action="/login" method="POST">
+            {{#if loginErr}}
+            <p class="error">{{loginErr}}</p>
+            {{/if}}
+                <div class="form-group">
+                    <label>Email address</label>
+                    <input type="email"  class="form-control" name="Email" placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password"  class="form-control" name="Password" placeholder="Password" required>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <button onclick="loginWithOtp()"
+                            style="color: #4e8ccf;text-decoration: underline; border:none;background-color:white">Login
+                            with OTP</button><br>
+                        
+                        
+                    </div>
+                
+                <div><a href="/signup" style="float: right;">Create New Account?</a></div>
+               <div> <button type="submit" class="btn btn-primary float-right">Login</button></div>
+            </form>
+            <form id="otp-form" class="register-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="your_mobile-number"><i class="zmdi zmdi-smartphone-iphone"></i></label>
+                        <input type="tel" id="your_mobile" placeholder="Enter your mobile number" name="phone"
+                            required />
+                    </div>
+                    <div class="no-mobile" style="display: none;">
+                        <p style="color: rgb(170, 28, 28);">Not a registered mobile number</p>
+                    </div>
+                    <div class="form-group form-button">
+                        
+                        <input type="submit" id="otp-login" class="form-submit" value="Send OTP" />
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+<script>
+function loginWithOtp() {
+        $('#login-form').hide();
+        $('#otp-form').show();
+    }
+    $('#otp-form').submit(function (e) {
+        e.preventDefault();
+        let mobile = $('#your_mobile').val();
+        $.ajax({
+            url: '/ajax/isMobile',
+            method: 'post',
+            data: { "mobile": mobile },
+            success: (response) => {
+                if (response.status == 'valid') {
+                    sendOtp(mobile);
+                } else if (response.status == 'invalid') {
+                    $('.no-mobile').show();
+                }
+            }
+        })
+    })
+    function sendOtp(mobile) {
+        
+            $.ajax({
+            url: '/callOtp',
+            method: 'post',
+            data: { "mobile": mobile },
+            success: (response) => {
+                console.log(response)
+                localStorage.setItem('otp_id', response.otp_id);
+                localStorage.setItem('mobile',response.user_phone)
+                location.href='/otpVerification'
+            }
+        })
+        
+        
+    }
+
+</script>

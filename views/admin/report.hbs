@@ -1,0 +1,50 @@
+<style>
+.d-flex {
+    display: -ms-flexbox!important;
+    display: flex!important;
+    /* flex-direction: row; */
+    justify-content: space-evenly;
+    margin-top: 3rem;
+}
+</style>
+<div class="container-fluid">
+  <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 row">
+    <h2>Reports</h2>
+    <hr class="mt-5 mb-5">
+
+    <div class="card-columns">
+      <div class="card bg-light">
+        <div class="card-body text-center">
+          <h4 class="cart-text">Total no. of customers</h4>
+          <p class="card-text">{{userNo}} </p>
+        </div>
+      </div>
+      <div class="card bg-info">
+        <div class="card-body text-center">
+          <h4 class="cart-text">Total no. of Products</h4>
+          <p class="card-text">{{proNo}}</p>
+        </div>
+      </div>
+      <div class="card bg-warning">
+        <div class="card-body text-center">
+          <h4 class="cart-text">Total no. of Orders</h4>
+          <p class="card-text">{{orderNo}}</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container d-flex" >
+      <a href="/admin/salesReport"><button class="btn btn-dark btn-md">Go to sales report &raquo;</button></a>
+     
+      
+    </div>
+
+  </main>
+</div>
+
+<!-- Icons -->
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>
+  feather.replace()
+</script>
